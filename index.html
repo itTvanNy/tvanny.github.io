@@ -203,6 +203,41 @@ nav{gap:12px;flex-wrap:wrap}
 .names{font-size:72px}
 .title{font-size:44px}
 }
+
+/* Effects */
+.fade{opacity:0;transform:translateY(40px);transition:all 1s ease;}
+.fade.visible{opacity:1;transform:translateY(0);}
+.glow{animation:glow 4s ease-in-out infinite;}
+@keyframes glow{
+0%,100%{text-shadow:0 0 0 rgba(124,143,163,0)}
+50%{text-shadow:0 0 24px rgba(124,143,163,.35)}
+}
+.float{animation:float 7s ease-in-out infinite;}
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+}
+.sparkle{
+position:fixed;
+width:5px;height:5px;
+background:rgba(255,255,255,.7);
+border-radius:50%;
+pointer-events:none;
+animation:spark 8s linear infinite;
+z-index:1;
+}
+@keyframes spark{
+from{transform:translateY(100vh) scale(.2);opacity:0}
+20%{opacity:.6}
+to{transform:translateY(-10vh) scale(1);opacity:0}
+}
+.hero::after{
+content:'';
+position:absolute;inset:0;
+background:radial-gradient(circle at center,transparent 40%,rgba(28,47,69,.08));
+pointer-events:none;
+}
+
 </style>
 </head>
 <body>
@@ -218,7 +253,7 @@ nav{gap:12px;flex-wrap:wrap}
 <section class="hero" id="hero">
 <div class="container">
 <div class="tag">Wedding Invitation • Coastal Luxury</div>
-<div class="script">we are getting married</div>
+<div class="script glow float">we are getting married</div>
 <div class="names">Андрей<br>&<br>Николь</div>
 <div class="date">18 July 2026</div>
 </div>
@@ -227,9 +262,9 @@ nav{gap:12px;flex-wrap:wrap}
 
 <section id="details">
 <div class="container">
-<h2 class="title">Details</h2>
+<h2 class="title fade">Details</h2>
 <p class="sub">Мы будем счастливы разделить этот день вместе с вами и сохранить воспоминания о самом важном моменте нашей жизни.</p>
-<div class="editorial">
+<div class="editorial fade">
 <div class="card">
 <h3>Церемония</h3>
 <p>13:15<br>Торжественная регистрация брака и первые счастливые мгновения вместе.</p>
@@ -248,8 +283,8 @@ nav{gap:12px;flex-wrap:wrap}
 
 <section id="timing">
 <div class="container">
-<h2 class="title">Timing</h2>
-<div class="timeline">
+<h2 class="title fade">Timing</h2>
+<div class="timeline fade">
 <div class="item"><div class="time">13:15</div><h4>Церемония</h4></div>
 <div class="item"><div class="time">14:30</div><h4>Фотосессия</h4></div>
 <div class="item"><div class="time">16:00</div><h4>Встреча гостей</h4></div>
@@ -261,9 +296,9 @@ nav{gap:12px;flex-wrap:wrap}
 
 <section id="dress">
 <div class="container">
-<h2 class="title">Dress Code</h2>
+<h2 class="title fade">Dress Code</h2>
 <p class="sub">Будем рады, если вы поддержите палитру нашего праздника.</p>
-<div class="colors">
+<div class="colors fade">
 <div class="c" style="background:#e9dfd2"></div>
 <div class="c" style="background:#d6d0c7"></div>
 <div class="c" style="background:#aeb8b0"></div>
@@ -275,8 +310,8 @@ nav{gap:12px;flex-wrap:wrap}
 
 <section id="location">
 <div class="container">
-<div class="loc">
-<h2 class="title" style="color:white;margin-bottom:8px">Location</h2>
+<div class="loc fade">
+<h2 class="title fade" style="color:white;margin-bottom:8px">Location</h2>
 <p style="line-height:2;color:rgba(255,255,255,.8)">Ресторан «Акватория»<br>Нижегородская область</p>
 <a class="btn" href="#">Открыть карту</a>
 </div>
@@ -287,6 +322,27 @@ nav{gap:12px;flex-wrap:wrap}
 <div class="ft">Ждём вас ♡</div>
 <p style="margin-top:14px;color:#6d7b8b">С любовью, Андрей и Николь</p>
 </footer>
+
+
+<script>
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('visible');
+}
+});
+},{threshold:0.15});
+
+document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
+
+for(let i=0;i<20;i++){
+const s=document.createElement('div');
+s.className='sparkle';
+s.style.left=Math.random()*100+'vw';
+s.style.animationDelay=Math.random()*8+'s';
+document.body.appendChild(s);
+}
+</script>
 
 </body>
 </html>
