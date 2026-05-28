@@ -207,66 +207,87 @@ section { padding:110px 40px; position:relative; z-index:2; }
 .card h3 { font-family:'Cinzel',serif; font-weight:300; font-size:28px; margin-bottom:12px; }
 .card p  { font-size:16px; line-height:2; color:#5a6b7a; font-style:italic; }
 
-/* ── OCEAN BELT ───────────────────────── */
-.ocean-belt {
+/* ── PHOTO SLIDER ─────────────────────── */
+.slider-wrap {
+  position:relative;
+  background:var(--navy);
+  overflow:hidden;
+  height:500px;
+  touch-action:pan-y;
+}
+@media(max-width:700px){ .slider-wrap { height:72vw; min-height:260px; max-height:420px; } }
+
+.slider-track {
+  display:flex;
+  height:100%;
+  will-change:transform;
+  transition:transform .7s cubic-bezier(.4,0,.2,1);
+}
+.slide {
+  flex:0 0 100%;
   position:relative;
   overflow:hidden;
-  background:var(--navy);
-  padding:0;
-  height:460px;
 }
-@media(max-width:700px){ .ocean-belt { height:auto; min-height:280px; } }
-
-/* photos — stack on mobile, strip on desktop */
-.photo-strip {
-  display:grid;
-  grid-template-columns:1.6fr 1fr 1fr;
-  height:100%;
-}
-@media(max-width:700px){
-  .photo-strip {
-    grid-template-columns:1fr;
-    grid-template-rows:220px 160px 160px;
-    height:auto;
-  }
-}
-.photo-panel {
-  position:relative; overflow:hidden;
-}
-.photo-panel img {
+.slide img {
   width:100%; height:100%;
   object-fit:cover;
-  filter:grayscale(25%) brightness(.82) contrast(1.05);
-  transition:filter .8s ease, transform .8s cubic-bezier(.2,.8,.3,1);
-  transform:scale(1.06);
   display:block;
+  filter:grayscale(20%) brightness(.84) contrast(1.05);
+  transform:scale(1.04);
+  transition:filter .6s, transform 8s linear;
 }
-.photo-panel:hover img { filter:grayscale(0%) brightness(.92); transform:scale(1); }
-
-/* curtain reveal */
-.curtain {
+.slide.active img { transform:scale(1.0); filter:grayscale(0%) brightness(.88); }
+.slide-overlay {
   position:absolute; inset:0;
-  background:var(--navy);
-  transform-origin:left;
-  transition:transform 1.4s cubic-bezier(.77,0,.175,1);
+  background:linear-gradient(to top, rgba(26,45,64,.6) 0%, transparent 50%);
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding:32px 36px;
 }
-.photo-strip.revealed .curtain { transform:scaleX(0); }
-.photo-strip.revealed .photo-panel:nth-child(2) .curtain { transition-delay:.2s; }
-.photo-strip.revealed .photo-panel:nth-child(3) .curtain { transition-delay:.4s; }
-
-.photo-overlay {
-  position:absolute; inset:0;
-  background:linear-gradient(to top, rgba(26,45,64,.55), transparent 55%);
-  display:flex; align-items:flex-end; padding:28px;
-}
-.photo-caption {
+.slide-caption {
   font-family:'Tenor Sans',sans-serif;
   font-size:10px; letter-spacing:4px;
-  text-transform:uppercase; color:rgba(255,255,255,.55);
-  transform:translateY(8px); opacity:0;
-  transition:all .5s;
+  text-transform:uppercase; color:rgba(255,255,255,.65);
 }
-.photo-panel:hover .photo-caption { transform:translateY(0); opacity:1; }
+.slide-counter {
+  font-family:'Cinzel',serif; font-weight:300;
+  font-size:13px; color:rgba(255,255,255,.4);
+  letter-spacing:2px;
+}
+
+/* arrows */
+.sl-arrow {
+  position:absolute; top:50%; transform:translateY(-50%);
+  z-index:10; background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  color:white; width:48px; height:48px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:background .3s, transform .3s;
+  backdrop-filter:blur(4px);
+  user-select:none; -webkit-user-select:none;
+}
+.sl-arrow:hover { background:rgba(255,255,255,.2); }
+.sl-arrow.prev { left:24px; }
+.sl-arrow.next { right:24px; }
+@media(max-width:500px){ .sl-arrow { width:38px; height:38px; } .sl-arrow.prev { left:12px; } .sl-arrow.next { right:12px; } }
+
+/* dots */
+.sl-dots {
+  position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+  display:flex; gap:8px; z-index:10;
+}
+.sl-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,.3);
+  transition:background .3s, transform .3s;
+  cursor:pointer;
+}
+.sl-dot.on { background:rgba(255,255,255,.85); transform:scale(1.3); }
+
+/* seagulls overlay */
+.belt-seascape {
+  position:absolute; bottom:0; left:0; right:0; z-index:10;
+  pointer-events:none; line-height:0;
+}
 
 /* ocean illustration over belt */
 .belt-seascape {
@@ -604,28 +625,48 @@ footer {
   </div>
 </section>
 
-<!-- ═══ PHOTO BELT ═══ -->
-<div class="ocean-belt">
-  <div class="photo-strip" id="ps">
-    <div class="photo-panel">
-      <div class="curtain"></div>
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=900&auto=format&fit=crop" alt="Ceremony" loading="lazy">
-      <div class="photo-overlay"><span class="photo-caption">The Ceremony</span></div>
+<!-- ═══ PHOTO SLIDER ═══ -->
+<div class="slider-wrap" id="sliderWrap">
+  <div class="slider-track" id="sliderTrack">
+    <div class="slide active">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Ceremony">
+      <div class="slide-overlay">
+        <span class="slide-caption">The Ceremony</span>
+        <span class="slide-counter">1 / 3</span>
+      </div>
     </div>
-    <div class="photo-panel">
-      <div class="curtain"></div>
-      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=600&auto=format&fit=crop" alt="Details" loading="lazy">
-      <div class="photo-overlay"><span class="photo-caption">The Details</span></div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop" alt="Details">
+      <div class="slide-overlay">
+        <span class="slide-caption">The Details</span>
+        <span class="slide-counter">2 / 3</span>
+      </div>
     </div>
-    <div class="photo-panel">
-      <div class="curtain"></div>
-      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop" alt="Coast" loading="lazy">
-      <div class="photo-overlay"><span class="photo-caption">The Coast</span></div>
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="Coast">
+      <div class="slide-overlay">
+        <span class="slide-caption">The Coast</span>
+        <span class="slide-counter">3 / 3</span>
+      </div>
     </div>
   </div>
-  <!-- decorative seagulls SVG on top of photos -->
+
+  <button class="sl-arrow prev" id="slPrev" aria-label="Prev">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="sl-arrow next" id="slNext" aria-label="Next">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <div class="sl-dots" id="slDots">
+    <div class="sl-dot on"></div>
+    <div class="sl-dot"></div>
+    <div class="sl-dot"></div>
+  </div>
+
+  <!-- seagulls -->
   <div class="belt-seascape">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="60" style="opacity:.3">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="60" style="opacity:.25">
       <path d="M200,35 Q210,27 220,35" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       <path d="M380,20 Q392,12 404,20" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       <path d="M620,42 Q630,34 640,42" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round"/>
@@ -777,17 +818,39 @@ const ro = new IntersectionObserver(es => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.rv').forEach(el => ro.observe(el));
 
-/* ── PHOTO CURTAIN (mobile+desktop) ── */
-const photoObs = new IntersectionObserver(es => {
-  es.forEach(e => {
-    if(e.isIntersecting){
-      e.target.classList.add('revealed');
-      photoObs.disconnect();
-    }
-  });
-}, { threshold: 0.15 });
-const ps = document.getElementById('ps');
-if(ps) photoObs.observe(ps);
+/* ── PHOTO SLIDER ──────────────────── */
+(function(){
+  const track = document.getElementById('sliderTrack');
+  const slides = track.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.sl-dot');
+  let cur = 0, startX = 0, dragging = false, autoT;
+
+  function go(n){
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('on');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('on');
+    track.style.transform = `translateX(-${cur * 100}%)`;
+  }
+
+  document.getElementById('slNext').addEventListener('click', () => { go(cur+1); reset(); });
+  document.getElementById('slPrev').addEventListener('click', () => { go(cur-1); reset(); });
+  dots.forEach((d,i) => d.addEventListener('click', () => { go(i); reset(); }));
+
+  // touch swipe
+  const wrap = document.getElementById('sliderWrap');
+  wrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; dragging = true; }, { passive:true });
+  wrap.addEventListener('touchend', e => {
+    if(!dragging) return; dragging = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    if(Math.abs(dx) > 40){ go(dx < 0 ? cur+1 : cur-1); reset(); }
+  }, { passive:true });
+
+  // autoplay
+  function reset(){ clearInterval(autoT); autoT = setInterval(() => go(cur+1), 5000); }
+  reset();
+})();
 
 /* ── LIQUID CARD HOVER ─────────────── */
 document.querySelectorAll('.card').forEach(card => {
