@@ -1,0 +1,223 @@
+body {
+    background-color: #FFF1E6 !important; /* Цвет бумаги под оригинал */
+    color: #1A3E68 !important; /* Насыщенный синий цвет контуров */
+    font-family: 'Montserrat', sans-serif !important;
+    margin: 0;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Настройка карточки и двойной винтажной рамки */
+.wedding-card {
+    background-color: #FFF1E6;
+    border: 1px solid #1A3E68;
+    border-radius: 4px;
+    box-sizing: border-box;
+    max-width: 480px;
+    padding: 20px 0 25px 0;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    
+    outline: 1px solid #1A3E68;
+    outline-offset: -10px; /* Смещение внутренней рамки */
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.body-section, .header-section {
+    padding: 0 25px;
+}
+
+.text-section {
+    padding: 0 30px;
+}
+
+/* Возвращаем КРУПНЫЙ размер кусочкам топ-экрана */
+.decor-top-container {
+    width: 100%;
+    max-width: 440px; /* Сделали шире */
+    margin: 0 auto 5px auto;
+}
+
+.decor-top-img {
+    width: 100%;
+    height: auto;
+}
+
+.ribbon-container {
+    width: 100%;
+    max-width: 420px; /* Увеличили размер ленты */
+    margin: 10px auto 0 auto;
+}
+
+.ribbon-img {
+    width: 100%;
+    height: auto;
+}
+
+/* Новая расписная дата */
+.wedding-date-handwritten {
+    font-family: 'Marck Script', cursive !important; /* Форсируем расписной шрифт */
+    font-size: 34px !important; /* Увеличили размер */
+    color: #B54F49 !important; /* Мягкий винтажный красный */
+    margin-top: -8px; /* Плотно прижимаем к ленточке */
+    margin-bottom: 5px;
+}
+
+.couple-container {
+    width: 100%;
+    max-width: 400px; /* Увеличили размер пары */
+    margin: 10px auto 20px auto;
+}
+
+.couple-main-img {
+    width: 100%;
+    height: auto;
+}
+
+/* Расписные каллиграфические заголовки */
+.script-title {
+    font-family: 'Marck Script', cursive !important; /* Форсируем расписной шрифт */
+    font-size: 42px !important; /* Сделали надписи крупнее и заметнее */
+    margin: 15px 0 10px;
+    color: #1A3E68 !important;
+}
+
+.paragraph {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 8px auto;
+    max-width: 90%;
+}
+
+.text-muted {
+    font-size: 14px;
+}
+
+/* Настройка сетки календаря */
+.calendar {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 20px auto;
+    max-width: 280px;
+}
+
+.cal-day {
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+.cal-header {
+    color: #C85A53;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.active-day {
+    border: 2px dashed #C85A53;
+    border-radius: 50%;
+    color: #C85A53;
+    font-weight: 600;
+}
+
+.table-art {
+    font-size: 32px;
+    margin: 20px 0;
+}
+
+/* Локация и интерактивная кнопка */
+.location-name {
+    color: #C85A53;
+    font-size: 24px;
+    margin: 5px 0;
+    font-weight: 600;
+}
+
+.map-button {
+    border: 1px solid #1A3E68;
+    border-radius: 20px;
+    color: #1A3E68;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 30px;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+.map-button:hover {
+    background-color: #1A3E68;
+    color: #FFF1E6;
+}
+
+/* Список тайминга */
+.timeline-container {
+    display: inline-block;
+    text-align: left;
+}
+
+.timeline-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.timeline-row .icon {
+    font-size: 22px;
+    margin-right: 15px;
+}
+
+.timeline-row .time {
+    color: #C85A53;
+    font-weight: 600;
+    margin-right: 10px;
+    width: 50px;
+    font-size: 16px;
+}
+
+/* Круги палитры дресс-кода */
+.palette {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.circle {
+    border-radius: 50%;
+    height: 34px;
+    width: 34px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+
+/* Блок ограничений по детям */
+.kids-box {
+    border: 1px dashed #C85A53;
+    border-radius: 12px;
+    padding: 20px 15px;
+}
+
+.kids-text {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Блок машины в самом низу */
+.car-container {
+    width: 100%;
+    max-width: 320px; /* Увеличили машину */
+    margin: 35px auto 15px auto;
+}
+
+.car-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
