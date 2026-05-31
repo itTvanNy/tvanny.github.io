@@ -91,9 +91,27 @@
         .vetka-br { bottom: -10px; right: -10px; transform: scaleY(-1); }
         .scatter { position: relative; }
         .s { position: absolute; font-weight: normal !important; pointer-events: none; line-height: 1; }
+
+        /* Мерцание даты 18 */
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 4px rgba(181,79,73,0.3); }
+            50% { text-shadow: 0 0 14px rgba(181,79,73,0.9), 0 0 24px rgba(181,79,73,0.5); }
+        }
+        .red-num { animation: glowPulse 2s ease-in-out infinite !important; }
+
+        /* Падающие сердечки */
+        #hearts-canvas { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; }
+
+        /* Машинка */
+        @keyframes driveCar {
+            0%   { left: -220px; }
+            100% { left: calc(100% + 20px); }
+        }
+        #car-img { animation: driveCar 4s linear forwards; }
     </style>
 </head>
 <body>
+    <canvas id="hearts-canvas"></canvas>
     <div class="main-wrapper">
         <table class="content-table">
             <tr>
@@ -121,6 +139,28 @@
                             <span class="s h-blue" style="left:50%; top:1px; font-size:7px;">·</span>
                         </div>
                         <div class="divider"></div>
+                        <div class="title-text" style="font-size:18px !important; margin-bottom:8px;">До свадьбы осталось</div>
+                        <div id="countdown" style="display:flex; justify-content:center; gap:10px; margin-bottom:18px;">
+                            <div style="text-align:center;">
+                                <div id="cd-days" style="font-size:36px !important; color:#B54F49 !important; line-height:1;">00</div>
+                                <div style="font-size:12px !important; color:#1A3E68 !important;">дней</div>
+                            </div>
+                            <div style="font-size:32px !important; color:#B54F49 !important; line-height:1.1;">:</div>
+                            <div style="text-align:center;">
+                                <div id="cd-hours" style="font-size:36px !important; color:#B54F49 !important; line-height:1;">00</div>
+                                <div style="font-size:12px !important; color:#1A3E68 !important;">часов</div>
+                            </div>
+                            <div style="font-size:32px !important; color:#B54F49 !important; line-height:1.1;">:</div>
+                            <div style="text-align:center;">
+                                <div id="cd-minutes" style="font-size:36px !important; color:#B54F49 !important; line-height:1;">00</div>
+                                <div style="font-size:12px !important; color:#1A3E68 !important;">минут</div>
+                            </div>
+                            <div style="font-size:32px !important; color:#B54F49 !important; line-height:1.1;">:</div>
+                            <div style="text-align:center;">
+                                <div id="cd-seconds" style="font-size:36px !important; color:#B54F49 !important; line-height:1;">00</div>
+                                <div style="font-size:12px !important; color:#1A3E68 !important;">секунд</div>
+                            </div>
+                        </div>
                         <div class="title-text calendar-title-space">Июль 2026</div>
                         <table class="cal-table">
                             <tr>
@@ -247,14 +287,16 @@
                 </td>
             </tr>
             
-            <!-- МАШИНКА ВЫНЕСЕНА НА ЧИСТЫЙ БЕЖЕВЫЙ ФОН -->
+            <!-- МАШИНКА АНИМИРОВАННАЯ -->
             <tr>
-                <td class="section-cell" style="padding-top: 15px; padding-bottom: 20px; position: relative;">
+                <td class="section-cell" style="padding-top: 15px; padding-bottom: 20px; position: relative; overflow: hidden;">
                     <span class="s h-red" style="left:10px; top:10px; font-size:11px; position:absolute;">♡</span>
                     <span class="s h-blue" style="left:25px; top:25px; font-size:8px; position:absolute;">✦</span>
                     <span class="s h-red" style="right:10px; top:10px; font-size:10px; position:absolute;">♡</span>
                     <span class="s h-blue" style="right:28px; top:28px; font-size:8px; position:absolute;">✦</span>
-                    <div class="car-w"><img src="car.png" class="img-box"></div>
+                    <div id="car-anim" style="width:100%; position:relative; height:90px;">
+                        <img src="car.png" id="car-img" style="position:absolute; height:80px; width:auto; bottom:0; left:-220px;">
+                    </div>
                     <span class="s h-red" style="left:15px; bottom:15px; font-size:10px; position:absolute;">♡</span>
                     <span class="s h-red" style="right:15px; bottom:15px; font-size:9px; position:absolute;">♡</span>
                 </td>
@@ -263,6 +305,7 @@
     </div>
 </body>
 <script>
+    // --- Resize vetka ---
     function resizeVetka() {
         var cell = document.getElementById('vetka-cell');
         var img = document.getElementById('big-vetka-img');
@@ -277,6 +320,92 @@
     }
     window.addEventListener('load', resizeVetka);
     window.addEventListener('resize', resizeVetka);
+
+    // --- Таймер обратного отсчёта ---
+    function updateCountdown() {
+        var wedding = new Date('2026-07-18T13:15:00');
+        var now = new Date();
+        var diff = wedding - now;
+        if (diff <= 0) {
+            document.getElementById('countdown').innerHTML = '<div style="font-size:22px;color:#B54F49;">🎉 Сегодня свадьба! 🎉</div>';
+            return;
+        }
+        var days    = Math.floor(diff / (1000*60*60*24));
+        var hours   = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        var minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+        var seconds = Math.floor((diff % (1000*60)) / 1000);
+        document.getElementById('cd-days').textContent    = String(days).padStart(2,'0');
+        document.getElementById('cd-hours').textContent   = String(hours).padStart(2,'0');
+        document.getElementById('cd-minutes').textContent = String(minutes).padStart(2,'0');
+        document.getElementById('cd-seconds').textContent = String(seconds).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // --- Падающие сердечки ---
+    var canvas = document.getElementById('hearts-canvas');
+    var ctx = canvas.getContext('2d');
+    var hearts = [];
+
+    function resizeCanvas() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    var colors = ['#B54F49', '#1A3E68', '#c97070', '#5a7ab5'];
+    var symbols = ['♡', '♥', '✦'];
+
+    function spawnHeart() {
+        hearts.push({
+            x: Math.random() * window.innerWidth,
+            y: -20,
+            size: 10 + Math.random() * 16,
+            speed: 0.6 + Math.random() * 1.2,
+            drift: (Math.random() - 0.5) * 0.5,
+            opacity: 0.5 + Math.random() * 0.5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            symbol: symbols[Math.floor(Math.random() * symbols.length)],
+            rotation: (Math.random() - 0.5) * 0.4
+        });
+    }
+
+    function animateHearts() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = hearts.length - 1; i >= 0; i--) {
+            var h = hearts[i];
+            h.y += h.speed;
+            h.x += h.drift;
+            ctx.save();
+            ctx.globalAlpha = h.opacity;
+            ctx.font = h.size + 'px serif';
+            ctx.fillStyle = h.color;
+            ctx.translate(h.x, h.y);
+            ctx.rotate(h.rotation);
+            ctx.fillText(h.symbol, 0, 0);
+            ctx.restore();
+            if (h.y > window.innerHeight + 30) hearts.splice(i, 1);
+        }
+        requestAnimationFrame(animateHearts);
+    }
+    setInterval(spawnHeart, 400);
+    animateHearts();
+
+    // --- Анимация машинки повторная при скролле ---
+    var carAnimated = false;
+    var carImg = document.getElementById('car-img');
+    function restartCar() {
+        carImg.style.animation = 'none';
+        carImg.offsetHeight; // reflow
+        carImg.style.animation = 'driveCar 4s linear forwards';
+    }
+    var carObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) { restartCar(); }
+        });
+    }, { threshold: 0.3 });
+    if (carImg) carObserver.observe(document.getElementById('car-anim'));
 </script>
 </body>
 </html>
