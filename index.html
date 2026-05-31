@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Свадьба Андрея и Николь</title>
     <style>
-        body { background-color: #111E2E !important; margin: 0; padding: 20px 10px; }
-        p, div, span, h1, h2, h3, a, td { color: #1A3E68 !important; font-family: 'Segoe Script', 'Gabriola', cursive !important; font-weight: bold !important; line-height: 1.4; }
+        body { background-color: #FFF1E6 !important; margin: 0; padding: 20px 10px; }
+        
+        p, div, span, h1, h2, h3, a, td { 
+            color: #1A3E68 !important; 
+            font-family: 'Segoe Script', 'Gabriola', cursive !important; 
+            font-weight: bold !important; 
+            line-height: 1.4; 
+        }
+        
         .main-wrapper { width: 100%; max-width: 460px; margin: 0 auto; box-sizing: border-box; }
         .content-table { width: 100%; border-collapse: collapse; table-layout: fixed; background-color: #FFF1E6; border: 1px solid #1A3E68; border-radius: 4px; }
         .section-cell { padding-bottom: 35px; text-align: center; position: relative; }
@@ -15,8 +22,7 @@
             box-sizing: border-box; background-color: #FFF1E6;
             border: 45px solid transparent; border-image-source: url('frame.png');
             border-image-slice: 15% 12% 15% 12%; border-image-repeat: repeat;
-            padding: 10px 5px 0 5px; text-align: center;
-            position: relative; 
+            padding: 10px 5px 0 5px; text-align: center; position: relative; 
         }
         .timing-framed-card {
             box-sizing: border-box; background-color: #FFF1E6;
@@ -26,44 +32,29 @@
         }
         .img-box { display: block; margin: 0 auto; max-width: 100%; height: auto; background: transparent !important; }
         
-        .cupid-top-left {
-            position: absolute;
-            top: -20px;
-            left: -15px;
-            width: 110px;
-            z-index: 10;
-        }
-
-        .rings-top-right {
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            width: 105px;
-            z-index: 10;
-        }
-
+        .cupid-top-left { position: absolute; top: -20px; left: -15px; width: 110px; z-index: 10; }
+        .rings-top-right { position: absolute; top: -20px; right: -10px; width: 105px; z-index: 10; }
         .ribbon-w { max-width: 340px; margin: 0 auto 0 auto; position: relative; z-index: 5; }
         .couple-w { max-width: 320px; margin: 0 auto 10px auto; }
         .table-w { max-width: 340px; margin: 20px auto 0 auto; }
         .cupid-w { max-width: 100px; margin: 15px auto 10px auto; }
-        .car-w { max-width: 240px; margin: 30px auto 10px auto; }
+        .car-w { max-width: 240px; margin: 15px auto 10px auto; }
         
-        /* ЦВЕТ ИЗМЕНЕН НА СИНИЙ, ОТСТУП УМЕНЬШЕН ЕЩЕ В 2 РАЗА */
         .handwritten-date { 
-            font-size: 24px !important; 
-            color: #1A3E68 !important; /* Глубокий синий цвет в тон ленты */
-            margin-top: -55px !important; /* Принудительно подтягивает дату вплотную */
-            margin-bottom: 20px !important; /* Комфортный зазор до фотографии пары */
-            text-align: center; 
-            position: relative;
-            z-index: 6;
+            font-size: 24px !important; color: #1A3E68 !important; 
+            margin-top: -55px !important; margin-bottom: 20px !important; 
+            text-align: center; position: relative; z-index: 6;
         }
-
         .timing-internal-table { width: 100%; border-collapse: collapse; }
         .t-side-img { width: 90px; text-align: center; vertical-align: middle; padding: 12px 0; }
         .t-side-text { text-align: left; vertical-align: middle; font-size: 16px !important; padding: 12px 0 12px 10px; }
         .t-border-dashed td { border-bottom: 1px dashed #1A3E68; }
         .t-img-rings { max-width: 75px; } .t-img-glasses { max-width: 75px; } .t-img-shampan { max-width: 65px; } .t-img-firework { max-width: 70px; }
+        .t-img-rings img, .t-img-glasses img, .t-img-shampan img, .t-img-firework img,
+        .cupid-top-left img, .rings-top-right img {
+            filter: invert(22%) sepia(85%) saturate(800%) hue-rotate(200deg) brightness(90%);
+        }
+        .t-img-rings { max-width: 115px; }
         .timing-time-val { color: #B54F49 !important; font-size: 20px !important; display: inline-block; margin-right: 5px; }
         .title-text { font-size: 32px !important; margin: 10px 0; text-align: center; position: relative; display: inline-block; width: 100%; }
         .main-p { font-size: 16px !important; line-height: 1.5; margin: 10px 0; text-align: center; }
@@ -87,6 +78,13 @@
         .dots-table { margin: 15px auto; border-collapse: collapse; }
         .dot-c { width: 30px; height: 30px; border-radius: 50%; display: block; }
         .kids-border-box { border: 1px dashed #B54F49; border-radius: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
+        .vetka { position: absolute; width: 90px; pointer-events: none; z-index: 10; }
+        .vetka-tl { top: -10px; left: -10px; transform: scaleX(-1); }
+        .vetka-tr { top: -10px; right: -10px; }
+        .vetka-bl { bottom: -10px; left: -10px; transform: scale(-1,-1); }
+        .vetka-br { bottom: -10px; right: -10px; transform: scaleY(-1); }
+        .scatter { position: relative; }
+        .s { position: absolute; font-weight: normal !important; pointer-events: none; line-height: 1; }
     </style>
 </head>
 <body>
@@ -95,14 +93,11 @@
             <tr>
                 <td style="padding: 0; margin: 0;">
                     <div class="top-framed-card">
-                        
                         <div class="cupid-top-left"><img src="cupid-flying.png" class="img-box"></div>
                         <div class="rings-top-right"><img src="rings-top.png" class="img-box"></div>
-                        
                         <div class="ribbon-w"><img src="ribbon.png" class="img-box"></div>
                         <div class="handwritten-date">18 июля 2026</div>
                         <div class="couple-w"><img src="couple.png" class="img-box"></div>
-                        
                         <div class="title-text">
                             <div class="decor-cluster-box">
                                 <span class="h-floating h-blue pos-g1">♡</span><span class="h-floating h-red pos-g2">♡</span>
@@ -112,6 +107,13 @@
                         </div>
                         <div class="main-p" style="margin-top: 15px;">Совсем скоро наступит день, который станет для нас особенным.</div>
                         <div class="main-p">С огромной радостью и большой любовью приглашаем вас разделить с нами этот волшебный и важный момент нашей жизни!</div>
+                        <div style="position:relative; height:18px; margin: 5px 0;">
+                            <span class="s h-red" style="left:8%; top:0; font-size:10px;">♡</span>
+                            <span class="s h-blue" style="left:20%; top:3px; font-size:8px;">✦</span>
+                            <span class="s h-red" style="left:75%; top:0; font-size:9px;">♡</span>
+                            <span class="s h-blue" style="left:88%; top:2px; font-size:8px;">✦</span>
+                            <span class="s h-blue" style="left:50%; top:1px; font-size:7px;">·</span>
+                        </div>
                         <div class="divider"></div>
                         <div class="title-text calendar-title-space">Июль 2026</div>
                         <table class="cal-table">
@@ -127,13 +129,17 @@
                             </tr>
                         </table>
                         <div class="table-w" style="padding-bottom: 10px;"><img src="table.png" class="img-box"></div>
+                        <img src="vetka.png" class="vetka vetka-bl" alt="">
+                        <img src="vetka.png" class="vetka vetka-br" alt="">
                     </div>
                 </td>
             </tr>
-            <!-- РАМКА 2: Тайминг с облаком летающих сердечек -->
+            <!-- РАМКА 2: Тайминг -->
             <tr>
                 <td style="padding: 0; margin: 0;">
                     <div class="timing-framed-card">
+                        <img src="vetka.png" class="vetka vetka-tl" alt="">
+                        <img src="vetka.png" class="vetka vetka-tr" alt="">
                         <div class="title-text" style="margin-top: 0;">
                             <div class="decor-cluster-box">
                                 <span class="h-floating h-red" style="top: -10px; left: 15px; transform: rotate(-15deg);">♡</span>
@@ -144,81 +150,127 @@
                         <table class="timing-internal-table">
                             <tr class="t-border-dashed">
                                 <td class="t-side-img"><div class="t-img-rings"><img src="rings.png" class="img-box"></div></td>
-                                <td class="t-side-text"><span class="timing-time-val">13:15</span> – Торжественная церемония (ЗАГС)</td>
+                                <td class="t-side-text" style="position:relative;"><span class="timing-time-val">13:15</span> – Торжественная церемония
+                                    <span class="s h-red" style="right:5px; top:8px; font-size:9px;">♡</span>
+                                </td>
                             </tr>
                             <tr class="t-border-dashed">
-                                <td class="t-side-img"><div class="t-img-glasses"><img src="glasses.png" class="img-box"></div></td>
-                                <td class="t-side-text"><span class="timing-time-val">15:00</span> – Сбор гостей</td>
+                                <td class="t-side-img"><div class="t-img-glasses"><img src="shampan.png" class="img-box"></div></td>
+                                <td class="t-side-text" style="position:relative;"><span class="timing-time-val">15:00</span> – Сбор гостей
+                                    <span class="s h-blue" style="right:5px; top:8px; font-size:8px;">✦</span>
+                                </td>
                             </tr>
                             <tr class="t-border-dashed">
-                                <td class="t-side-img"><div class="t-img-shampan"><img src="shampan.png" class="img-box"></div></td>
-                                <td class="t-side-text"><span class="timing-time-val">16:00</span> – Праздничный ужин</td>
+                                <td class="t-side-img"><div class="t-img-shampan"><img src="glasses.png" class="img-box"></div></td>
+                                <td class="t-side-text" style="position:relative;"><span class="timing-time-val">16:00</span> – Праздничный ужин
+                                    <span class="s h-red" style="right:5px; top:8px; font-size:9px;">♡</span>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="t-side-img"><div class="t-img-firework"><img src="firework.png" class="img-box"></div></td>
-                                <td class="t-side-text"><span class="timing-time-val">22:00</span> – Заключение вечера</td>
+                                <td class="t-side-text" style="position:relative;"><span class="timing-time-val">22:00</span> – Заключение вечера
+                                    <span class="s h-blue" style="right:8px; top:6px; font-size:9px;">♪</span>
+                                    <span class="s h-red" style="right:22px; top:14px; font-size:8px;">♡</span>
+                                </td>
                             </tr>
                         </table>
+                        <img src="vetka.png" class="vetka vetka-bl" alt="">
+                        <img src="vetka.png" class="vetka vetka-br" alt="">
                     </div>
                 </td>
             </tr>
-
-            <!-- ТРЕТИЙ ЭТАЖ: Дресс-код, дети и карта -->
+            
+            <!-- ТРЕТИЙ ЭТАЖ: Дресс-код и дети -->
             <tr>
-                <td class="section-cell" style="padding: 35px 25px 35px 25px;">
-                    <div class="title-text">
-                        <div class="decor-cluster-box">
-                            <span class="h-floating h-blue" style="top: -15px; left: -20px; transform: rotate(-10deg);">♡</span>
-                            Для нас главное — вы!
-                            <span class="h-floating h-red" style="bottom: -10px; right: 15px; transform: rotate(15deg);">♡</span>
-                        </div>
-                    </div>
-                    <div class="main-p">Но мы будем рады, если дамы выберут наряды пастельных оттенков, а джентльмены — классический костюм, брюки и рубашку.</div>
-                    
-                    <div class="cupid-w"><img src="cupid.png" class="img-box" alt="Купидон"></div>
-                    
-                    <table class="dots-table">
+                <td style="padding: 0; background-color: #FFF1E6;">
+                    <table style="width: 100%; border-collapse: collapse; height: 100%;">
                         <tr>
-                            <td style="padding: 0 5px;"><span class="dot-c" style="background: #EED9CE;"></span></td>
-                            <td style="padding: 0 5px;"><span class="dot-c" style="background: #F4EAD4;"></span></td>
-                            <td style="padding: 0 5px;"><span class="dot-c" style="background: #E5EADF;"></span></td>
-                            <td style="padding: 0 5px;"><span class="dot-c" style="background: #DBE5F0;"></span></td>
-                            <td style="padding: 0 5px;"><span class="dot-c" style="background: #F5E2DA;"></span></td>
+                            <td style="vertical-align: middle; padding: 35px 25px 0 25px; text-align: center; position: relative; background-color: #FFF1E6;">
+                                <img src="vetka.png" class="vetka vetka-tl" alt="">
+                                <div class="title-text">
+                                    <div class="decor-cluster-box">
+                                        <span class="h-floating h-blue" style="top: -15px; left: -20px; transform: rotate(-10deg);">♡</span>
+                                        Для нас главное — вы!
+                                        <span class="h-floating h-red" style="bottom: -10px; right: 15px; transform: rotate(15deg);">♡</span>
+                                    </div>
+                                </div>
+                                <div class="main-p">В этот особенный день мы будем рады видеть вас в нарядах, отражающих атмосферу нашего праздника. Пожалуйста, воздержитесь от белого цвета (он зарезервирован для невесты), а также от слишком ярких, неоновых оттенков. Будем благодарны за выбор элегантных и гармоничных образов!</div>
+                                <div class="cupid-w"><img src="cupid.png" class="img-box" alt="Купидон"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="section-cell" style="padding: 15px 25px 35px 25px; background-color: #FFF1E6;">
+                                <div class="kids-border-box" style="position: relative;">
+                                    <span class="h-floating h-red" style="top: 5px; left: 10px; transform: rotate(-20deg);">♡</span>
+                                    <span class="h-floating h-blue" style="bottom: 5px; right: 10px; transform: rotate(25deg);">♡</span>
+                                    <div class="main-p sub-text" style="margin: 0; padding: 0 10px;">Мы очень любим детей, однако формат нашего праздника предполагает мероприятие только для взрослых гостей. Благодарим за понимание.</div>
+                                </div>
+                                <div style="position:relative; height:20px; margin-top:10px;">
+                                    <span class="s h-red" style="left:15%; top:2px; font-size:10px;">♡</span>
+                                    <span class="s h-blue" style="left:30%; top:0; font-size:8px;">✦</span>
+                                    <span class="s h-red" style="left:55%; top:3px; font-size:9px;">♡</span>
+                                    <span class="s h-blue" style="left:70%; top:1px; font-size:8px;">✦</span>
+                                    <span class="s h-red" style="left:85%; top:2px; font-size:9px;">♡</span>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             
+            <!-- РАМКА 3: МЕСТО ПРОВЕДЕНИЯ С ИСПРАВЛЕННЫМИ ОТСТУПАМИ -->
             <tr>
-                <td class="section-cell" style="padding: 0 25px 35px 25px;">
-                    <div class="kids-border-box" style="position: relative;">
-                        <span class="h-floating h-red" style="top: 5px; left: 10px; transform: rotate(-20deg);">♡</span>
-                        <span class="h-floating h-blue" style="bottom: 5px; right: 10px; transform: rotate(25deg);">♡</span>
-                        <div class="main-p sub-text" style="margin: 0; padding: 0 10px;">Мы очень любим детей, однако формат нашего праздника предполагает мероприятие только для взрослых гостей. Благодарим за понимание.</div>
+                <td style="padding: 0; margin: 0;">
+                    <div style="box-sizing: border-box; background-color: #FFF1E6; background-image: url('frame-map.png') !important; background-size: 100% 100% !important; background-repeat: no-repeat !important; background-position: center !important; padding: 90px 45px 75px 45px; text-align: center; margin: 20px auto 0 auto; max-width: 410px; width: 100%;">
+                        
+                        <div class="title-text" style="margin-top: 0; margin-bottom: 5px;">
+                            <div class="decor-cluster-box">
+                                <span class="h-floating h-blue" style="top: -8px; left: 15px; transform: rotate(-25deg);">♡</span>
+                                <span class="h-floating h-red" style="top: 22px; left: -10px; transform: rotate(15deg);">♡</span>
+                                Место проведения
+                                <span class="h-floating h-red" style="top: 28px; right: 10px; transform: rotate(-10deg);">♡</span>
+                            </div>
+                        </div>
+                        
+                        <div class="place-name">Акватория</div>
+                        <div class="main-p sub-text">Нижегородская область, Городецкий округ,<br>сельский посёлок Турбазы</div>
+                        
+                        <a href="https://yandex.ru/maps/org/akvatoriya/1053493944/?ll=43.360431%2C56.784049&z=15" target="_blank" class="map-lnk" style="margin-bottom: 0;">📍 Показать на карте</a>
+                        
                     </div>
                 </td>
             </tr>
             
+            <!-- МАШИНКА ВЫНЕСЕНА НА ЧИСТЫЙ БЕЖЕВЫЙ ФОН -->
             <tr>
-                <td class="section-cell" style="padding: 0 25px 10px 25px;">
-                    <div class="title-text">
-                        <div class="decor-cluster-box">
-                            <span class="h-floating h-blue " style="top: -8px; left: 15px; transform: rotate(-25deg);">♡</span>
-                            <span class="h-floating h-red" style="top: 22px; left: -10px; transform: rotate(15deg);">♡</span>
-                            Место проведения
-                            <span class="h-floating h-red" style="top: 28px; right: 10px; transform: rotate(-10deg);">♡</span>
-                        </div>
-                    </div>
-                    
-                    <div class="place-name">Акватория</div>
-                    <div class="main-p sub-text">Кабардино-Балкарская Республика,<br>с. Атажукино, ул. Школьная, 1А</div>
-                    
-                    <a href="https://yandex.com" target="_blank" class="map-lnk">📍 Показать на карте</a>
-                    
+                <td class="section-cell" style="padding-top: 15px; padding-bottom: 20px; position: relative;">
+                    <span class="s h-red" style="left:10px; top:10px; font-size:11px; position:absolute;">♡</span>
+                    <span class="s h-blue" style="left:25px; top:25px; font-size:8px; position:absolute;">✦</span>
+                    <span class="s h-red" style="right:10px; top:10px; font-size:10px; position:absolute;">♡</span>
+                    <span class="s h-blue" style="right:28px; top:28px; font-size:8px; position:absolute;">✦</span>
                     <div class="car-w"><img src="car.png" class="img-box"></div>
+                    <span class="s h-red" style="left:15px; bottom:15px; font-size:10px; position:absolute;">♡</span>
+                    <span class="s h-red" style="right:15px; bottom:15px; font-size:9px; position:absolute;">♡</span>
                 </td>
             </tr>
         </table>
     </div>
+</body>
+<script>
+    function resizeVetka() {
+        var cell = document.getElementById('vetka-cell');
+        var img = document.getElementById('big-vetka-img');
+        if (cell && img) {
+            var h = cell.parentElement.offsetHeight;
+            if (h > 0) {
+                img.style.height = h + 'px';
+                img.style.width = 'auto';
+                img.style.maxWidth = '85px';
+            }
+        }
+    }
+    window.addEventListener('load', resizeVetka);
+    window.addEventListener('resize', resizeVetka);
+</script>
 </body>
 </html>
